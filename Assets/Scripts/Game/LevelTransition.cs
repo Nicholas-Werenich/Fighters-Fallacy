@@ -18,9 +18,7 @@ public class LevelTransition : MonoBehaviour
 {
     [Header("End Level")]
     public float timeToChangeLevel;
-
-    [Header("Start Level")]
-    public float timeToStartLevel;
+    public float transitionAnimationDelay;
 
     [Header("Colour Control")]
     public Material cloudMat;
@@ -51,24 +49,31 @@ public class LevelTransition : MonoBehaviour
     public IEnumerator NextLevel()
     {
 
+        //Player can't move
+        playerMovement.enabled = false;
+
+        yield return new WaitForSeconds(transitionAnimationDelay);
+
         //Move sky background
         StartCoroutine(skyLoader.SceneChange(PlayerPrefs.GetInt("Current Level"), timeToChangeLevel));
+
+        animator.SetTrigger("isEntering");
 
         yield return new WaitForSeconds(timeToChangeLevel/cloudColorDelayFraction);
         StartCoroutine(TransitionColor(PlayerPrefs.GetInt("Current Level") -1, timeToChangeLevel/cloudColorSpeedFraction));
 
-        animator.SetTrigger("Next Level");
+        SceneManager.LoadSceneAsync($"Level {PlayerPrefs.GetInt("Current Level") + 1}", LoadSceneMode.Additive);
 
-        //Player can't move
-        //playerMovement.enabled = false;
+        yield return new WaitForSeconds(timeToChangeLevel - timeToChangeLevel/cloudColorDelayFraction + 0.5f);
+        animator.SetTrigger("isExiting");
+
+        playerMovement.enabled = true;
 
 
-        
-        //Wait for seconds
 
-        //SceneManager.LoadScene($"Level {PlayerPrefs.GetInt("Current Level") + 1}", LoadSceneMode.Additive);
 
-        //StartLevel();
+
+        StartLevel();
     }
     
     //Smoothly change the 4 colors in clouds to the 4 colors in the next level

@@ -165,8 +165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7145d2b373d8e94396826cef5c48a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToChangeLevel: 3
-  timeToStartLevel: 3
+  timeToChangeLevel: 5
+  transitionAnimationDelay: 1
   cloudMat: {fileID: 2100000, guid: 625587ffae8b9cb42919e5f8ec584cfd, type: 2}
   cloudColorDelayFraction: 3
   cloudColorSpeedFraction: 2
@@ -703,7 +703,7 @@ MonoBehaviour:
   - {fileID: 6427053102322904399, guid: 295e80c7a05a4374dbe769d8626c9d37, type: 3}
   levelInBetween: {fileID: 351077025}
   transitionSpeed: 0.2
-  levelInBetweenOffset: 1.5
+  levelInBetweenOffset: 3
 --- !u!1 &1144272664
 GameObject:
   m_ObjectHideFlags: 0
