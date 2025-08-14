@@ -24,6 +24,8 @@ public class LevelTransition : MonoBehaviour
 
     [Header("Colour Control")]
     public Material cloudMat;
+    public float cloudColorDelayFraction;
+    public float cloudColorSpeedFraction;
 
     public List<LevelColors> levelColors = new List<LevelColors>();
 
@@ -52,17 +54,17 @@ public class LevelTransition : MonoBehaviour
         //Move sky background
         StartCoroutine(skyLoader.SceneChange(PlayerPrefs.GetInt("Current Level"), timeToChangeLevel));
 
-        yield return new WaitForSeconds(timeToChangeLevel/2);
-        StartCoroutine(TransitionColor(PlayerPrefs.GetInt("Current Level") -1, timeToChangeLevel/2));
+        yield return new WaitForSeconds(timeToChangeLevel/cloudColorDelayFraction);
+        StartCoroutine(TransitionColor(PlayerPrefs.GetInt("Current Level") -1, timeToChangeLevel/cloudColorSpeedFraction));
 
         animator.SetTrigger("Next Level");
 
         //Player can't move
-        playerMovement.enabled = false;
+        //playerMovement.enabled = false;
 
 
         
-      
+        //Wait for seconds
 
         //SceneManager.LoadScene($"Level {PlayerPrefs.GetInt("Current Level") + 1}", LoadSceneMode.Additive);
 
@@ -70,9 +72,10 @@ public class LevelTransition : MonoBehaviour
     }
     
     //Smoothly change the 4 colors in clouds to the 4 colors in the next level
+
     private IEnumerator TransitionColor(int currentLevel, float duration)
     {
-        string getColorLevel(int i) => $"To Color {i + 1}";
+        string getColorLevel(int i) => $"_Replace{i + 1}";
         Color[] startColors = levelColors[currentLevel].colors;
         Color[] targetColors = levelColors[currentLevel + 1].colors;
 
@@ -102,5 +105,17 @@ public class LevelTransition : MonoBehaviour
     {
         Debug.Log($"{colorName} - {startColor} : {endColor}");
         cloudMat.SetColor(colorName, Color.Lerp(startColor, endColor, t));
+    }
+
+    //Resets the cloud colors out of play mode
+    private void OnDisable()
+    {
+        string getColorLevel(int i) => $"_Replace{i + 1}";
+        Color[] startColors = levelColors[0].colors;
+
+        for (int i = 0; i < 4; i++)
+        {
+            cloudMat.SetColor(getColorLevel(i), startColors[i]);
+        }
     }
 }

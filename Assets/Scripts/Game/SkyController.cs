@@ -81,6 +81,7 @@ public class SkyController : MonoBehaviour
         transform.position = new Vector2(startPosition.x - cameraTransform.position.x * parallaxSpeedX, cameraTransform.position.y + transform.parent.position.y);
     }
 
+    //Once a piece goes off screen, move it to the other side
     private void CheckPosition()
     {
         if (backgroundPieces[currentMiddlePiece].position.x > cameraTransform.position.x + childSize / 2f)
