@@ -17,19 +17,27 @@ public class LevelColors
 public class LevelTransition : MonoBehaviour
 {
     [Header("End Level")]
-    public float timeToChangeLevel;
+    [SerializeField]
+    private float timeToChangeLevel;
 
     [Header("Colour Control")]
-    public Material cloudMat;
-    public float cloudColorDelayFraction;
-    public float cloudColorSpeedFraction;
 
-    public List<LevelColors> levelColors = new List<LevelColors>();
+    [SerializeField]
+    private Material cloudMat;
+
+    [SerializeField]
+    private float cloudColorDelayFraction;
+
+    [SerializeField]
+    private float cloudColorSpeedFraction;
+
+    [SerializeField]
+    private List<LevelColors> levelColors = new List<LevelColors>();
 
 
-    SkyLoader skyLoader;
-    PlayerMovement playerMovement;
-    Animator animator;
+    private SkyLoader skyLoader;
+    private PlayerMovement playerMovement;
+    private Animator animator;
     private void Awake()
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -40,11 +48,6 @@ public class LevelTransition : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void StartLevel()
-    {
-        PlayerPrefs.SetInt("Current Level", PlayerPrefs.GetInt("Current Level") + 1);
-    }
-
     public void ExitLevel()
     {
         playerMovement.enabled = false;
@@ -52,29 +55,35 @@ public class LevelTransition : MonoBehaviour
 
     public IEnumerator EnterLevel()
     {
+        //Stop player movement
         playerMovement.rb.linearVelocity = Vector2.zero;
         playerMovement.rb.gravityScale = 0f;
 
         //Move sky background
         StartCoroutine(skyLoader.SceneChange(PlayerPrefs.GetInt("Current Level"), timeToChangeLevel));
 
+        //Animate clouds to cover up scene
         animator.SetTrigger("isEntering");
 
+        //Change cloud colours to next level theme
         yield return new WaitForSeconds(timeToChangeLevel/cloudColorDelayFraction);
         StartCoroutine(TransitionColor(PlayerPrefs.GetInt("Current Level") -1, timeToChangeLevel/cloudColorSpeedFraction));
 
+        //Load the next level
         //SceneManager.LoadSceneAsync($"Level {PlayerPrefs.GetInt("Current Level") + 1}", LoadSceneMode.Additive);
+        
+        //Unload last level
+        //SceneManager.UnloadSceneAsync($"Level {PlayerPrefs.GetInt("Current Level")}");
 
+        //Animate clouds to slowly disapear
         yield return new WaitForSeconds(timeToChangeLevel - timeToChangeLevel/cloudColorDelayFraction + 0.5f);
         animator.SetTrigger("isExiting");
 
         playerMovement.enabled = true;
 
 
-
-
-
-       // StartLevel();
+        //Progress to next level count
+        PlayerPrefs.SetInt("Current Level", PlayerPrefs.GetInt("Current Level") + 1);
     }
     
     //Smoothly change the 4 colors in clouds to the 4 colors in the next level
@@ -106,6 +115,7 @@ public class LevelTransition : MonoBehaviour
         }
     }
 
+    //Change colour by value t 
     private void ColorChangeStep(string colorName, Color startColor, Color endColor, float t)
     {
         cloudMat.SetColor(colorName, Color.Lerp(startColor, endColor, t));

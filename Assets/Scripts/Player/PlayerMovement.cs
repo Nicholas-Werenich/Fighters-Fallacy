@@ -7,23 +7,32 @@ using static UnityEngine.Rigidbody2D;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    
-    public float normalSpeed;
-    public float sprintModifier;
-    public float jumpForce;
-    public float drag;
-    public float airDrag;
+
+    [SerializeField]
+    private float normalSpeed;
+    [SerializeField]
+    private float sprintModifier;
+    [SerializeField]
+    private float jumpForce;
+    [SerializeField]
+    private float drag;
+    [SerializeField]
+    private float airDrag;
 
     private float movementSpeed;
 
     [Header("CoyoteTime")]
-    public float coyoteTime;
+    [SerializeField]
+    private float coyoteTime;
     private float coyoteTimeCounter;
 
     [Header("Ground")]
-    public float groundDistance;
-    public float maxSlopeAngle;
-    public float fallingGravity;
+    [SerializeField]
+    private float groundDistance;
+    [SerializeField]
+    private float maxSlopeAngle;
+    [SerializeField]
+    private float fallingGravity;
     private float normalGravity;
 
     private BoxCollider2D col;

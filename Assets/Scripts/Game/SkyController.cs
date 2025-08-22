@@ -8,19 +8,29 @@ using UnityEngine.Tilemaps;
 
 public class SkyController : MonoBehaviour
 {
-    [Header("Scene Transition")]
-    private float yShiftPerLevel;
 
     [Header("Sprite Controls")]
     public Sprite childSprite;
-    public float childSize;
-    public int sortingOrder;
+
+    [SerializeField]
+    private float childSize;
+
+    [SerializeField]
+    private int sortingOrder;
 
     [Header("Speed Controls")]
-    public bool floatingLeft;
-    public float parallaxSpeedX;
-    public float parallaxSpeedY;
-    public float passiveSpeedMultiplier;
+
+    [SerializeField]
+    private bool floatingLeft;
+
+    [SerializeField]
+    private float parallaxSpeedX;
+
+    [SerializeField]
+    private float parallaxSpeedY;
+
+    [SerializeField]
+    private float passiveSpeedMultiplier;
 
     private Transform cameraTransform;
     private Vector2 startPosition;
@@ -28,8 +38,6 @@ public class SkyController : MonoBehaviour
 
     //Middle of size 3 array
     private int currentMiddlePiece = 1;
-
-    
 
     private void Start()
     {
@@ -61,12 +69,11 @@ public class SkyController : MonoBehaviour
     private void Update()
     {
         UpdateMovement();
-            
         CheckPosition();
-
         PassiveMovement();
     }
 
+    //Idle movement of background pieces
     private void PassiveMovement()
     {
         foreach(Transform transform in backgroundPieces)

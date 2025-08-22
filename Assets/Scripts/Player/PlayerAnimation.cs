@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
+    [Header("Animation Settings")]
     public float attackCoolDown;
     private float currentAttackCoolDown;
-    PlayerMovement playerMovement;
-    Inventory inventory;
-    GameObject weaponPos;
-    Animator animator;
-    Rigidbody2D rb;
+
+    private PlayerMovement playerMovement;
+    private Inventory inventory;
+    private GameObject weaponPos;
+    private Animator animator;
+    private Rigidbody2D rb;
     void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();

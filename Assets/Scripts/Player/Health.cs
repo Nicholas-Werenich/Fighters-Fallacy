@@ -6,22 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
-    public int knockBackForce;
-    public int totalHealth;
+    [Header("Health Settings")]
+    [SerializeField]
+    private int knockBackForce;
+    [SerializeField]
+    private int totalHealth;
+
     private int currentHealth;
 
-    Rigidbody2D rb;
-    SpriteRenderer SpriteRenderer;
-    Animator animator;
-    BoxCollider2D playerCollider;
-    PlayerAnimation playerAnimation;
+    private Rigidbody2D rb;
+    private Animator animator;
+    private BoxCollider2D playerCollider;
+    private PlayerAnimation playerAnimation;
     void Awake()
     {
         playerAnimation = GetComponent<PlayerAnimation>();
         currentHealth = totalHealth;
         playerCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        SpriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
 
@@ -73,12 +75,12 @@ public class Health : MonoBehaviour
         }
     }
 
+    //When taking damage from an enemy, face the enemy
     private void FaceEnemy(Collider2D enemy)
     {
         if (Mathf.Abs(enemy.transform.position.x) - Mathf.Abs(transform.position.x) > 0)
             playerAnimation.Flip("right");
         else 
             playerAnimation.Flip("left");
-
     }
 }

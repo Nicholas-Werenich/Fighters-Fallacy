@@ -3,30 +3,33 @@ using UnityEngine;
 public class Bobbing : MonoBehaviour
 {
     [Header("Bobbing Settings")]
-    public float bobHeight;
-    public float bobSpeed;
+
+    [SerializeField]
+    private float bobHeight;
+
+    [SerializeField]
+    private float bobSpeed;
 
     private float startY;
     private bool hasLanded = false;
 
-    public LayerMask ground;
-    Rigidbody2D rb;
+    [SerializeField]
+    private LayerMask ground;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
+
+    //Create a bobbing effect over ground
     private void Update()
     {
-        if (!hasLanded)
+        if (!hasLanded && Physics2D.Raycast(transform.position, Vector2.down, bobHeight + 0.05f, ground))
         {
-
-            if (Physics2D.Raycast(transform.position, Vector2.down, bobHeight + 0.5f, ground))
-            {
-                hasLanded = true;
-                startY = transform.position.y;
-                rb.gravityScale = 0;
-            }
+            hasLanded = true;
+            startY = transform.position.y;
+            rb.gravityScale = 0;
         }
         else
         {

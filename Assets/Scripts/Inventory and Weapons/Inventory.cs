@@ -11,41 +11,55 @@ using UnityEngine.XR;
 public class Inventory : MonoBehaviour
 {
     [Header("Objects")]
-    public GameObject slot;
+    [SerializeField]
+    private GameObject slot;
+    [SerializeField]
+    private Sprite nonActiveSlotIcon;
+    [SerializeField]
+    private Sprite activeSlotIcon;
 
-    public Sprite nonActiveSlotIcon;
-    public Sprite activeSlotIcon;
-
-    [Header("Weapons")]
-    public float weaponColliderSize;
-    public Transform weaponHolder;
-    [HideInInspector]
-    public Weapon[] weapons;
     private GameObject[] slots;
     private GameObject[] slotIcons;
     private GameObject[] weaponInstances;
 
-    WeaponFactory weaponFactory;
+    [Header("Weapons")]
+    [SerializeField]
+    private float weaponColliderSize;
+    [SerializeField]
+    private Transform weaponHolder;
+
+    [HideInInspector]
+    public Weapon[] weapons;
+
+    private WeaponFactory weaponFactory;
+
+    [Header("Slots")]
+    [SerializeField]
+    private int slotsAmount;
+    [SerializeField]
+    private float spaceBetweenSlots;
+    [SerializeField]
+    private float slotsSize;
+    [SerializeField]
+    private float hotbarHeight;
 
     [HideInInspector]
     public int activeSlot;
 
-    [Header("Slots")]
-    public int slotsAmount;
-    public float spaceBetweenSlots;
-    public float slotsSize;
+    [Header("Dropped Weapon")]
+    [SerializeField]
+    private GameObject pickUpTemplate;
+    [SerializeField]
+    private float pickUpSize;
+    [SerializeField]
+    private float dropForce;
 
-    public float hotbarHeight;
-
-    [Header("Pick Up Weapon")]
-    public GameObject pickUpTemplate;
-    public float pickUpSize;
-    public float dropForce;
-
-    private GameObject canvas;
+    [HideInInspector]
     public bool attacking;
 
+    private GameObject canvas;
 
+    //Keycodes for inventory slots
     private KeyCode[] keyCodes = new KeyCode[]
     {
         KeyCode.Alpha1,
@@ -75,6 +89,22 @@ public class Inventory : MonoBehaviour
         //Add inital weapons
     }
 
+    //Initialize the slots in the hotbar
+    public void AddSlots()
+    {
+        for (int i = 0; i < slotsAmount; i++)
+        {
+            GameObject currentPiece = Instantiate(slot, Vector3.zero, Quaternion.identity);
+            currentPiece.GetComponent<Image>().sprite = nonActiveSlotIcon;
+            RectTransform pieceParent = currentPiece.GetComponent<RectTransform>();
+            pieceParent.SetParent(canvas.transform);
+            pieceParent.localScale = Vector3.one;
+            pieceParent.sizeDelta = new Vector2(slotsSize, slotsSize);
+            pieceParent.localPosition = new Vector3(i * spaceBetweenSlots + i * slotsSize - ((slotsAmount - 1) * slotsSize + spaceBetweenSlots * (slotsAmount - 1)) / 2, -Screen.height / 2 + slotsSize / 2 + hotbarHeight, 0);
+            slots[i] = currentPiece;
+        }
+    }
+
     public void Update()
     {
         if (!attacking)
@@ -84,6 +114,8 @@ public class Inventory : MonoBehaviour
             DropInput();
         }
     }
+    
+    //Switch active inventory slot
     private void InventoryInput()
     {
         for (int i = 0; i < slotsAmount; i++)
@@ -95,6 +127,8 @@ public class Inventory : MonoBehaviour
         }
 
     }
+
+    //Drop the weapon in the active slot
     private void DropInput()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -102,6 +136,8 @@ public class Inventory : MonoBehaviour
             DropWeapon(activeSlot);
         }
     }
+
+    //Attack with the weapon in the active slot
     private void AttackInput()
     {
         if (Input.GetMouseButtonDown(0))
@@ -114,26 +150,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddSlots()
-    {
-        for (int i = 0; i < slotsAmount; i++)
-        {
-            GameObject currentPiece = Instantiate(slot, Vector3.zero, Quaternion.identity);
-            currentPiece.GetComponent<Image>().sprite = nonActiveSlotIcon;
-            RectTransform pieceParent = currentPiece.GetComponent<RectTransform>();
-            pieceParent.SetParent(canvas.transform);
-            pieceParent.localScale = Vector3.one;
-            pieceParent.sizeDelta = new Vector2(slotsSize, slotsSize);
-            pieceParent.localPosition = new Vector3(i * spaceBetweenSlots + i * slotsSize - ((slotsAmount - 1) * slotsSize + spaceBetweenSlots * (slotsAmount - 1))/2, -Screen.height/2 + slotsSize/2 + hotbarHeight, 0);
-            slots[i] = currentPiece;
-        }
-    }
+    //Add a weapon to empty slot
     public void AddWeapon(string weapon)
     {
         int assignedSlot = -1;
         Weapon newWeapon = weaponFactory.CreateWeapon(weapon);
-
-
 
         if (ReferenceEquals(weapons[activeSlot], null))
         {
@@ -180,6 +201,7 @@ public class Inventory : MonoBehaviour
         ActiveSlot(assignedSlot);
     }
 
+    //Initialize weapon in active slot
     private void ActiveSlot(int slot)
     {
         DeactivateSlot(activeSlot);
@@ -217,19 +239,23 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    //Remove weapon model from slot 
     private void DeactivateSlot(int slot)
     {
         slots[slot].GetComponent<Image>().sprite = nonActiveSlotIcon;
         if (weaponInstances[slot] != null)
         {
-            weaponInstances[slot].SetActive(false); // Deactivate the instantiated model instead of destroying it
+            weaponInstances[slot].SetActive(false);
         }
     }
+
+    //Remove slot
     private void RemoveSlotIcon(int slot)
     {
         Destroy(slotIcons[slot]);
     }
 
+    //Remove wepon from inventory and drop it
     private void DropWeapon(int slot)
     {
         if (!ReferenceEquals(weapons[slot], null))
@@ -247,6 +273,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    //Remove weapon from inventory slot
     public void RemoveWeapon(int slot)
     {
         weapons[slot] = null;

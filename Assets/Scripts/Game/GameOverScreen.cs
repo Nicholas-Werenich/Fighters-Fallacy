@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//Game overr menu functions
 public class GameOverScreen : MonoBehaviour
 {
     public void RestartButton()

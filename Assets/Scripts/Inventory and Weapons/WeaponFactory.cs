@@ -17,6 +17,8 @@ using UnityEngine.XR;
 
 //Everytime the weapon is created you need to re get the animator component
 
+
+//Abstract weapon class for basic variables and methods
 public abstract class Weapon : MonoBehaviour
 {
     public Transform Player;
@@ -43,6 +45,8 @@ public abstract class Weapon : MonoBehaviour
     public abstract void OnBreak();
 }
 
+
+//Ranged weapon type
 public abstract class RangedWeapon : Weapon
 {
     public GameObject Projectile;
@@ -84,6 +88,7 @@ public abstract class RangedWeapon : Weapon
     }
 }
 
+//Melee weapon type
 public abstract class MeleeWeapon : Weapon
 {
     public MeleeWeapon(string name, GameObject weaponObject, Sprite hotbarIcon, int damage, int durability) : base(name, weaponObject, hotbarIcon, damage, durability)
@@ -206,7 +211,6 @@ public class Rope : MeleeWeapon
 
 public class WeaponFactory : MonoBehaviour
 {
-    //Add more sword icon states
     public GameObject meleeWeapon;
     public GameObject rangeWeapon;
 

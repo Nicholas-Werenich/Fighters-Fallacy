@@ -885,11 +885,11 @@ MonoBehaviour:
   weaponColliderSize: 2
   weaponHolder: {fileID: 803935482}
   weapons: []
-  activeSlot: 0
   slotsAmount: 2
   spaceBetweenSlots: 10
   slotsSize: 50
   hotbarHeight: 10
+  activeSlot: 0
   pickUpTemplate: {fileID: 6830075705238335241, guid: a1896eb9cfc0bfe42bc353f097e55970, type: 3}
   pickUpSize: 1
   dropForce: 2

@@ -6,36 +6,42 @@ public class PickUpAble : MonoBehaviour
 {
     public string weaponType;
 
-    public Sprite openChest;
+    private Sprite openChest;
     private Inventory inventory;
     private GameObject canvas;
-    bool playerInbounds;
+    private bool playerInbounds;
+    private bool isChest = false;
 
-    void Awake()
+    private void Start()
     {
         inventory = FindFirstObjectByType<Inventory>();
         canvas = transform.GetChild(0).gameObject;
+        
+        if(gameObject.tag != "WeaponPickup")
+        {
+            isChest = true;
+            openChest = Resources.Load<Sprite>("Sprites/Chest Open");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && playerInbounds)
+            OnPickup();
+    }
+
+    private void OnPickup()
+    {
+        inventory.AddWeapon(weaponType);
+        canvas.SetActive(false);
+
+        if (isChest)
         {
-            inventory.AddWeapon(weaponType);
-            canvas.SetActive(false);
-
-            //Weapon or chest
-            if(gameObject.tag == "WeaponPickup")
-                Destroy(gameObject);
-            else
-            {
-                GetComponent<SpriteRenderer>().sprite = openChest;
-                Destroy(GetComponent<PickUpAble>());
-            }
-                
-
+            GetComponent<SpriteRenderer>().sprite = openChest;
+            Destroy(GetComponent<PickUpAble>());
         }
+        else
+            Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

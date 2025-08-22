@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerProjectile : Attack
 {
-
+    [Header("Projectile Settings")]
     public GameObject pickup;
     public string weaponType;
 

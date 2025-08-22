@@ -6,29 +6,35 @@ using UnityEngine;
 public class SkyLoader : MonoBehaviour
 {
     [Header("Backgrounds")]
+
     //List of prefab backgrounds
-    public List<GameObject> backgrounds = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> backgrounds = new List<GameObject>();
+
     private GameObject currentBackground;
     private GameObject nextBackground;
 
     [Header("Transition Assets")]
-    public GameObject levelInBetween;
+
+    [SerializeField]
+    private GameObject levelInBetween;
+    private Vector2 inBetweenStartPosition; 
 
     [Header("Metrics")]
-    public float levelInBetweenOffset;
-    float backgroundHeight;
+
+    [SerializeField]
+    private float levelInBetweenOffset;
+
+    private float backgroundHeight;
 
     private Vector2 startPosition;
-
     private Vector2 velocity = Vector3.zero;
     private Vector2 velocity2 = Vector3.zero;
     private Vector2 velocity3 = Vector3.zero;
 
-    private Transform cam;
     private void Awake()
     {
         startPosition = transform.position;
-        cam = Camera.main.transform;
 
         currentBackground = Instantiate(backgrounds[0], transform);
 
@@ -67,5 +73,6 @@ public class SkyLoader : MonoBehaviour
         //Prepare for next transition
         Destroy(currentBackground);
         currentBackground = nextBackground;
+        levelInBetween.transform.position = inBetweenStartPosition;
     }
 }
