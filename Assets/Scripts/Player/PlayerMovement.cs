@@ -34,7 +34,8 @@ public class PlayerMovement : MonoBehaviour
 
     private float horizontal;
 
-    Rigidbody2D rb;
+    [HideInInspector]
+    public Rigidbody2D rb;
     void Awake()
     {
         col = GetComponent<BoxCollider2D>();
@@ -74,10 +75,11 @@ public class PlayerMovement : MonoBehaviour
     {
        if (IsOnSlope())
            SlopeMovement();
-       else
+        else
+        {
             Movement();
-
-        FallingGravity();
+            FallingGravity();
+        }
     }
 
     private void FallingGravity()

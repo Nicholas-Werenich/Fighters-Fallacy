@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f84adc77e53eb541a5b911a74db0e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childSprite: {fileID: -855298285791758126, guid: 894c418f718f8a64089362348ef52b0c, type: 3}
+  childSprite: {fileID: -855298285791758126, guid: ed8e6968f7c09744fa7f8d5ca0d5e315, type: 3}
   childSize: 36
   sortingOrder: -6
   floatingLeft: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f84adc77e53eb541a5b911a74db0e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childSprite: {fileID: -6470460504253458178, guid: 9b5e085a3582e1a4dbde3b6e0f4fb6d5, type: 3}
+  childSprite: {fileID: 6937817954938267909, guid: f784703ff47804747972d365747655a0, type: 3}
   childSize: 36
   sortingOrder: -5
   floatingLeft: 0
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f84adc77e53eb541a5b911a74db0e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childSprite: {fileID: 4130640169021434097, guid: 944b10c0612d66c40a2a31d655910941, type: 3}
+  childSprite: {fileID: -4178046375966092550, guid: c6921d91b0df463429c9608efd060351, type: 3}
   childSize: 36
   sortingOrder: -3
   floatingLeft: 1
@@ -163,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2124832373716094808}
   m_Layer: 0
-  m_Name: Level 2
+  m_Name: Level 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f84adc77e53eb541a5b911a74db0e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childSprite: {fileID: -4178046375966092550, guid: af5370189c0139941b16becdf961ebc5, type: 3}
+  childSprite: {fileID: -6470460504253458178, guid: f76329fa7c776ab43a0e42eedfe9587a, type: 3}
   childSize: 36
   sortingOrder: -4
   floatingLeft: 1

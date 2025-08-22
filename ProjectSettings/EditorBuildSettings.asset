@@ -15,16 +15,16 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 7417d302f2ab9b44f8314e0b94df8a14
   - enabled: 1
-    path: Assets/Scenes/Level 4.unity
+    path: Assets/Scenes/Proto Level 4.unity
     guid: 2d2fdbe7bfd749044ac92b6595159206
   - enabled: 1
-    path: Assets/Scenes/Level 3.unity
+    path: Assets/Scenes/Proto Level 3.unity
     guid: 67ddc18af7cbadf4fac1f3b1b33a0b12
   - enabled: 1
-    path: Assets/Scenes/Level 2.unity
+    path: Assets/Scenes/Level 1.unity
     guid: 657e8b8baf93f3c4b9b5a733667a313f
   - enabled: 1
-    path: Assets/Scenes/Level 1.unity
+    path: Assets/Scenes/Proto Level 1.unity
     guid: b8b35b97840bbcc448ed70bf6bf992f8
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

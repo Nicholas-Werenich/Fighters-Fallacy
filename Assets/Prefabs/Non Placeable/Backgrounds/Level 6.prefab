@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f84adc77e53eb541a5b911a74db0e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childSprite: {fileID: -855298285791758126, guid: 894c418f718f8a64089362348ef52b0c, type: 3}
+  childSprite: {fileID: -855298285791758126, guid: c174408aef3da7e48b2962c6f1e66eed, type: 3}
   childSize: 36
   sortingOrder: -6
   floatingLeft: 0
@@ -95,14 +95,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f84adc77e53eb541a5b911a74db0e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childSprite: {fileID: -6470460504253458178, guid: 9b5e085a3582e1a4dbde3b6e0f4fb6d5, type: 3}
+  childSprite: {fileID: -6470460504253458178, guid: 618c4209540d4634ca8695133bbd2323, type: 3}
   childSize: 36
-  sortingOrder: -5
+  sortingOrder: -4
   floatingLeft: 0
   parallaxSpeedX: 0.02
   parallaxSpeedY: 0
   passiveSpeedMultiplier: 0.01
---- !u!1 &3170375666271403139
+--- !u!1 &3852586508924831273
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,22 +110,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5141539289330392762}
-  - component: {fileID: 5409258125190689887}
+  - component: {fileID: 6490598188133942560}
+  - component: {fileID: 6586501087669987996}
   m_Layer: 0
-  m_Name: Foreground Clouds
+  m_Name: Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5141539289330392762
+--- !u!4 &6490598188133942560
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3170375666271403139}
+  m_GameObject: {fileID: 3852586508924831273}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -134,23 +134,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2124832373716094808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5409258125190689887
+--- !u!114 &6586501087669987996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3170375666271403139}
+  m_GameObject: {fileID: 3852586508924831273}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f84adc77e53eb541a5b911a74db0e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childSprite: {fileID: 4130640169021434097, guid: 944b10c0612d66c40a2a31d655910941, type: 3}
+  childSprite: {fileID: 6937817954938267909, guid: f92b82b6d0c2acb4bbbcd693e2eb310e, type: 3}
   childSize: 36
-  sortingOrder: -3
-  floatingLeft: 1
-  parallaxSpeedX: 0.02
+  sortingOrder: -5
+  floatingLeft: 0
+  parallaxSpeedX: 0.01
   parallaxSpeedY: 0
   passiveSpeedMultiplier: 0.01
 --- !u!1 &6427053102322904399
@@ -163,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2124832373716094808}
   m_Layer: 0
-  m_Name: Level 2
+  m_Name: Level 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,9 +183,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6049843911178862725}
+  - {fileID: 6490598188133942560}
   - {fileID: 5867371142608497046}
   - {fileID: 201591869335101354}
-  - {fileID: 5141539289330392762}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7192390202487451801
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 201591869335101354}
   - component: {fileID: 4390617050006433287}
   m_Layer: 0
-  m_Name: Middleground Clouds
+  m_Name: Foreground Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -232,9 +232,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f84adc77e53eb541a5b911a74db0e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  childSprite: {fileID: -4178046375966092550, guid: af5370189c0139941b16becdf961ebc5, type: 3}
+  childSprite: {fileID: -4178046375966092550, guid: da8a61cadf8a81745b7f96e89b0642be, type: 3}
   childSize: 36
-  sortingOrder: -4
+  sortingOrder: -3
   floatingLeft: 1
   parallaxSpeedX: 0.05
   parallaxSpeedY: 0

@@ -18,7 +18,6 @@ public class LevelTransition : MonoBehaviour
 {
     [Header("End Level")]
     public float timeToChangeLevel;
-    public float transitionAnimationDelay;
 
     [Header("Colour Control")]
     public Material cloudMat;
@@ -46,13 +45,15 @@ public class LevelTransition : MonoBehaviour
         PlayerPrefs.SetInt("Current Level", PlayerPrefs.GetInt("Current Level") + 1);
     }
 
-    public IEnumerator NextLevel()
+    public void ExitLevel()
     {
-
-        //Player can't move
         playerMovement.enabled = false;
+    }
 
-        yield return new WaitForSeconds(transitionAnimationDelay);
+    public IEnumerator EnterLevel()
+    {
+        playerMovement.rb.linearVelocity = Vector2.zero;
+        playerMovement.rb.gravityScale = 0f;
 
         //Move sky background
         StartCoroutine(skyLoader.SceneChange(PlayerPrefs.GetInt("Current Level"), timeToChangeLevel));
@@ -62,7 +63,7 @@ public class LevelTransition : MonoBehaviour
         yield return new WaitForSeconds(timeToChangeLevel/cloudColorDelayFraction);
         StartCoroutine(TransitionColor(PlayerPrefs.GetInt("Current Level") -1, timeToChangeLevel/cloudColorSpeedFraction));
 
-        SceneManager.LoadSceneAsync($"Level {PlayerPrefs.GetInt("Current Level") + 1}", LoadSceneMode.Additive);
+        //SceneManager.LoadSceneAsync($"Level {PlayerPrefs.GetInt("Current Level") + 1}", LoadSceneMode.Additive);
 
         yield return new WaitForSeconds(timeToChangeLevel - timeToChangeLevel/cloudColorDelayFraction + 0.5f);
         animator.SetTrigger("isExiting");
@@ -73,11 +74,10 @@ public class LevelTransition : MonoBehaviour
 
 
 
-        StartLevel();
+       // StartLevel();
     }
     
     //Smoothly change the 4 colors in clouds to the 4 colors in the next level
-
     private IEnumerator TransitionColor(int currentLevel, float duration)
     {
         string getColorLevel(int i) => $"_Replace{i + 1}";
@@ -108,7 +108,6 @@ public class LevelTransition : MonoBehaviour
 
     private void ColorChangeStep(string colorName, Color startColor, Color endColor, float t)
     {
-        Debug.Log($"{colorName} - {startColor} : {endColor}");
         cloudMat.SetColor(colorName, Color.Lerp(startColor, endColor, t));
     }
 

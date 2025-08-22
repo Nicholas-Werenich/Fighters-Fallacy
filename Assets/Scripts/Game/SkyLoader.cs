@@ -15,7 +15,6 @@ public class SkyLoader : MonoBehaviour
     public GameObject levelInBetween;
 
     [Header("Metrics")]
-    public float transitionSpeed;
     public float levelInBetweenOffset;
     float backgroundHeight;
 
@@ -51,7 +50,6 @@ public class SkyLoader : MonoBehaviour
 
         while (Vector2.Distance(currentBackground.transform.position, targetPosition) > 0.01f || velocity.magnitude > 0.01f)
         {
-            Debug.Log("Duration: " + duration);
 
             //Smoothly move backgrounds up to next slot
             currentBackground.transform.position = Vector2.SmoothDamp(currentBackground.transform.position, targetPosition, ref velocity, duration);
@@ -60,7 +58,7 @@ public class SkyLoader : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Transition Done");
+        Debug.Log("Sky transition complete");
 
         //Snap positions at end
         currentBackground.transform.position = targetPosition;
