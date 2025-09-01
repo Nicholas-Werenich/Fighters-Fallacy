@@ -353,7 +353,7 @@ Transform:
   m_GameObject: {fileID: 6830075705238335241}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.15, y: 0.53599024, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -428,7 +428,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponType: Sword
-  openChest: {fileID: 8053542641194625825, guid: 329682e06b3022b4a838af567dc8ca6c, type: 3}
 --- !u!50 &553380865035627434
 Rigidbody2D:
   serializedVersion: 5
@@ -504,7 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9ebd99f1430174fbc07329e2304fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bobHeight: 0.2
+  bobHeight: 0.1
   bobSpeed: 2
   ground:
     serializedVersion: 2

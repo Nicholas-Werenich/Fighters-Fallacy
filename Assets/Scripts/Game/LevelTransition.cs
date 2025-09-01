@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 [System.Serializable]
@@ -16,9 +17,16 @@ public class LevelColors
 
 public class LevelTransition : MonoBehaviour
 {
+
     [Header("End Level")]
     [SerializeField]
     private float timeToChangeLevel;
+    [SerializeField]
+    private float minimumSkySmoothSpeed;
+
+    [Header("UI Control")]
+    [SerializeField]
+    private float UITransitionDuration;
 
     [Header("Colour Control")]
 
@@ -35,9 +43,14 @@ public class LevelTransition : MonoBehaviour
     private List<LevelColors> levelColors = new List<LevelColors>();
 
 
+
+    [Header("References")]
     private SkyLoader skyLoader;
     private PlayerMovement playerMovement;
     private Animator animator;
+    private GameObject player;
+    private CanvasGroup UICanvasGroup;
+    private Inventory inventory;
     private void Awake()
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -46,6 +59,10 @@ public class LevelTransition : MonoBehaviour
         skyLoader = FindFirstObjectByType<SkyLoader>();
         playerMovement = FindFirstObjectByType<PlayerMovement>();
         animator = GetComponent<Animator>();
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        UICanvasGroup = player.GetComponentInChildren<CanvasGroup>();
+        inventory = player.GetComponent<Inventory>();
     }
 
     public void ExitLevel()
@@ -69,15 +86,19 @@ public class LevelTransition : MonoBehaviour
         yield return new WaitForSeconds(timeToChangeLevel/cloudColorDelayFraction);
         StartCoroutine(TransitionColor(PlayerPrefs.GetInt("Current Level") -1, timeToChangeLevel/cloudColorSpeedFraction));
 
+        StartCoroutine(PlayerUIExitTransition(UITransitionDuration));
+
         //Load the next level
         //SceneManager.LoadSceneAsync($"Level {PlayerPrefs.GetInt("Current Level") + 1}", LoadSceneMode.Additive);
-        
+
         //Unload last level
         //SceneManager.UnloadSceneAsync($"Level {PlayerPrefs.GetInt("Current Level")}");
 
         //Animate clouds to slowly disapear
-        yield return new WaitForSeconds(timeToChangeLevel - timeToChangeLevel/cloudColorDelayFraction + 0.5f);
+        yield return new WaitForSeconds(timeToChangeLevel - timeToChangeLevel / cloudColorDelayFraction + 0.5f);
         animator.SetTrigger("isExiting");
+        StartCoroutine(PlayerUIEnterTransition(UITransitionDuration));
+        skyLoader.EnableAddedCloudMovement(minimumSkySmoothSpeed);
 
         playerMovement.enabled = true;
 
@@ -119,6 +140,28 @@ public class LevelTransition : MonoBehaviour
     private void ColorChangeStep(string colorName, Color startColor, Color endColor, float t)
     {
         cloudMat.SetColor(colorName, Color.Lerp(startColor, endColor, t));
+    }
+
+    private IEnumerator PlayerUIExitTransition(float duration)
+    {
+        float t = 0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / duration;
+            UICanvasGroup.alpha = Mathf.Lerp(1, 0, t);
+            yield return null;
+        }
+    }
+
+    private IEnumerator PlayerUIEnterTransition(float duration)
+    {
+        float t = 0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / duration;
+            UICanvasGroup.alpha = Mathf.Lerp(0, 1, t);
+            yield return null;
+        }
     }
 
     //Resets the cloud colors out of play mode

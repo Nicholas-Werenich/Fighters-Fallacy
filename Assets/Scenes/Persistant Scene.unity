@@ -166,9 +166,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToChangeLevel: 5
+  minimumSkySmoothSpeed: 0.005
+  UITransitionDuration: 0.5
   cloudMat: {fileID: 2100000, guid: 625587ffae8b9cb42919e5f8ec584cfd, type: 2}
-  cloudColorDelayFraction: 3
-  cloudColorSpeedFraction: 2
+  cloudColorDelayFraction: 2.5
+  cloudColorSpeedFraction: 1.5
   levelColors:
   - colors:
     - {r: 0.854902, g: 0.9058824, b: 0.95294124, a: 1}
@@ -186,10 +188,10 @@ MonoBehaviour:
     - {r: 0.8862746, g: 0.7294118, b: 0.8313726, a: 1}
     - {r: 0.65882355, g: 0.60784316, b: 0.79215693, a: 1}
   - colors:
-    - {r: 0.95294124, g: 0.79215693, b: 0.5411765, a: 1}
-    - {r: 0.9294118, g: 0.54509807, b: 0.43137258, a: 1}
-    - {r: 0.9058824, g: 0.627451, b: 0.68235296, a: 1}
-    - {r: 0.67058825, g: 0.49411768, b: 0.654902, a: 1}
+    - {r: 0.48235297, g: 0.3372549, b: 0.4666667, a: 1}
+    - {r: 0.5803922, g: 0.37647063, b: 0.5176471, a: 1}
+    - {r: 0.6745098, g: 0.41960788, b: 0.5372549, a: 1}
+    - {r: 0.8313726, g: 0.4039216, b: 0.42352945, a: 1}
   - colors:
     - {r: 0.90196085, g: 0.6627451, b: 0.9450981, a: 1}
     - {r: 0.7411765, g: 0.49803925, b: 0.94117653, a: 1}
@@ -721,9 +723,9 @@ MonoBehaviour:
   - {fileID: 6427053102322904399, guid: 5bcb7449ada441d4c968c1dcd2c7bbbe, type: 3}
   - {fileID: 6427053102322904399, guid: 295e80c7a05a4374dbe769d8626c9d37, type: 3}
   - {fileID: 6427053102322904399, guid: f2c21ee3366d56b438ff49fef0924122, type: 3}
-  - {fileID: 6427053102322904399, guid: 295e80c7a05a4374dbe769d8626c9d37, type: 3}
-  - {fileID: 6427053102322904399, guid: 295e80c7a05a4374dbe769d8626c9d37, type: 3}
-  - {fileID: 6427053102322904399, guid: 295e80c7a05a4374dbe769d8626c9d37, type: 3}
+  - {fileID: 6427053102322904399, guid: 4aa7ec66f140e9c44b48893e5f372d42, type: 3}
+  - {fileID: 6427053102322904399, guid: 4fb974b7239b64e48977c3f3cd873c1a, type: 3}
+  - {fileID: 6427053102322904399, guid: 16d5f8ea9196e984bb24466fb98aeff5, type: 3}
   levelInBetween: {fileID: 351077025}
   levelInBetweenOffset: 3
 --- !u!1 &1144272664
@@ -882,9 +884,9 @@ MonoBehaviour:
   slot: {fileID: 6294962119913046659, guid: 9293286b1640a6044b30d76e4d6aef4f, type: 3}
   nonActiveSlotIcon: {fileID: 4130640169021434097, guid: c8b900341b1cdb8469c65cceccd94f52, type: 3}
   activeSlotIcon: {fileID: 7680820834086852892, guid: 531fc7efc3015d94f872bdbd566ed1bc, type: 3}
+  weapons: []
   weaponColliderSize: 2
   weaponHolder: {fileID: 803935482}
-  weapons: []
   slotsAmount: 2
   spaceBetweenSlots: 10
   slotsSize: 50
@@ -1388,6 +1390,7 @@ GameObject:
   - component: {fileID: 1846693599}
   - component: {fileID: 1846693598}
   - component: {fileID: 1846693597}
+  - component: {fileID: 1846693600}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -1477,6 +1480,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!225 &1846693600
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846693595}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1980275881
 GameObject:
   m_ObjectHideFlags: 0

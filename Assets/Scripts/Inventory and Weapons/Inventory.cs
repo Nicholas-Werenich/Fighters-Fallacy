@@ -18,9 +18,14 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private Sprite activeSlotIcon;
 
+    //Slots in the hotbar
     private GameObject[] slots;
+    //The icons of the weapons in the hotbar
     private GameObject[] slotIcons;
+    //The weapon models in the players hand
     private GameObject[] weaponInstances;
+    //Weapon objcets in the inventory
+    public Weapon[] weapons;
 
     [Header("Weapons")]
     [SerializeField]
@@ -28,8 +33,7 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private Transform weaponHolder;
 
-    [HideInInspector]
-    public Weapon[] weapons;
+
 
     private WeaponFactory weaponFactory;
 
@@ -76,17 +80,36 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         weaponFactory = FindFirstObjectByType<WeaponFactory>();
+        canvas = transform.GetChild(0).gameObject;
+
+        InitializeSlots();
+        ActiveSlot(0);
+    }
+
+    public void InitializeSlots()
+    {
+
         slots = new GameObject[slotsAmount];
         weapons = new Weapon[slotsAmount];
         slotIcons = new GameObject[slotsAmount];
         weaponInstances = new GameObject[slotsAmount];
-
-        canvas = transform.GetChild(0).gameObject;
-        
         AddSlots();
-        ActiveSlot(0);
+    }
 
-        //Add inital weapons
+    public void UpdateSlots(int slotsAmount)
+    {
+
+        GameObject[] oldSlotIcons = slotIcons;
+        Weapon[] oldWeapons = weapons;
+
+        DestroySlots();
+
+        this.slotsAmount = slotsAmount;
+
+
+        InitializeSlots();
+        ReassignSlots(oldSlotIcons, oldWeapons);
+        ActiveSlot(activeSlot);
     }
 
     //Initialize the slots in the hotbar
@@ -105,6 +128,34 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    private void DestroySlots()
+    {
+        for (int i = 0; i < slotsAmount; i++)
+        {
+            Destroy(slots[i]);
+            if(weaponInstances[i] != null)
+                Destroy(weaponInstances[i]);
+            if(slotIcons[i] != null)
+                Destroy(slotIcons[i]);
+            if (weapons[i] != null)
+                Destroy(weapons[i]);
+        }
+    }
+
+    private void ReassignSlots(GameObject[] oldSlotIcons, Weapon[] oldWeapons)
+    {
+        for (int i = 0; i < oldWeapons.Length; i++)
+        {
+            weapons[i] = oldWeapons[i];
+        }
+        for (int i = 0; i < oldSlotIcons.Length; i++)
+        {
+            slotIcons[i] = oldSlotIcons[i];
+            if(slotIcons[i] != null)
+                CreateSlotIcon(i);
+        }
+
+    }
     public void Update()
     {
         if (!attacking)
@@ -112,6 +163,11 @@ public class Inventory : MonoBehaviour
             AttackInput();
             InventoryInput();
             DropInput();
+        }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            UpdateSlots(3);
         }
     }
     
@@ -151,7 +207,7 @@ public class Inventory : MonoBehaviour
     }
 
     //Add a weapon to empty slot
-    public void AddWeapon(string weapon)
+    public void AddWeapon(string weapon, int attemptedSlot = -1)
     {
         int assignedSlot = -1;
         Weapon newWeapon = weaponFactory.CreateWeapon(weapon);
@@ -180,16 +236,21 @@ public class Inventory : MonoBehaviour
             assignedSlot = activeSlot;
         }
         
-        weapons[assignedSlot].WeaponObject.GetComponent<SpriteRenderer>().sprite = weapons[assignedSlot].HotbarIcon;
-        GameObject weaponIcon = new GameObject(weapon + " Icon");
+        CreateSlotIcon(assignedSlot);
+    }
+
+    private void CreateSlotIcon(int slot)
+    {
+        weapons[slot].WeaponObject.GetComponent<SpriteRenderer>().sprite = weapons[slot].HotbarIcon;
+        GameObject weaponIcon = new GameObject(weapons[slot].Name + " Icon");
 
         RectTransform rectTransform = weaponIcon.AddComponent<RectTransform>();
         rectTransform.SetParent(canvas.transform);
 
         Image sprite = weaponIcon.AddComponent<Image>();
-        sprite.sprite = weapons[assignedSlot].HotbarIcon;
+        sprite.sprite = weapons[slot].HotbarIcon;
         rectTransform.sizeDelta = new Vector2(sprite.pixelsPerUnit * (slotsSize * 3.5f), sprite.pixelsPerUnit * (slotsSize * 3.5f));
-        rectTransform.localPosition = slots[assignedSlot].transform.localPosition;
+        rectTransform.localPosition = slots[slot].transform.localPosition;
 
         /* For later
         if (weapons[assignedSlot] is RangedWeapon)
@@ -197,8 +258,8 @@ public class Inventory : MonoBehaviour
             ((RangedWeapon)weapons[assignedSlot]).Projectile.GetComponent<BoxCollider2D>().size = weapons[assignedSlot].HotbarIcon.rect.size / weapons[assignedSlot].HotbarIcon.pixelsPerUnit * weaponColliderSize;
         }*/
 
-        slotIcons[assignedSlot] = weaponIcon;
-        ActiveSlot(assignedSlot);
+        slotIcons[slot] = weaponIcon;
+        ActiveSlot(slot);
     }
 
     //Initialize weapon in active slot
